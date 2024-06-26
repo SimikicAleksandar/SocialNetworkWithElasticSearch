@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My profile</title>
+</head>
+<body>
+<div *ngIf="renderable==1" >
+  <form [formGroup]="formCurrentUser" (ngSubmit)="onSubmit()" >
+    <label> Profile name:  </label>
+    <input type="text" formControlName="name" value="{{currentUser.displayName}}" name="text"><br><br>
+    <label> Profile description:  </label>
+    <textarea formControlName="content" value="{{currentUser.description}}" name="text"></textarea>
+    <br>
+    <br>
+    <input type="submit" value="Save changes!">
+  </form>
+  <br>
+  <button color="primary" (click)="back()" >Go Back</button>
+  <br>
+  <a href="http://localhost:4200/groups"><button>My Groups</button></a>
+  <br>
+  <br>
+</div>
+</body>
+</html>

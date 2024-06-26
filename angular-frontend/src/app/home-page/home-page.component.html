@@ -1,0 +1,40 @@
+<h2>Welcome to Sima's app, have fun</h2>
+<div class="navBar">
+
+  <a href="http://localhost:4200/GroupCreate"><button id = "groupCreate">Create Group</button></a>
+  <a><button (click)="changePassword()" id="changePassword">Change Password</button></a>
+  <a href="http://localhost:4200/getCurrentUser"><button id = "myProfile">My profile</button></a>
+  <a><button (click)="LogOut()" id="Logout">Logout</button></a>
+
+</div>
+<form [formGroup]="formPost" (ngSubmit)="onSubmit()">
+<div  class="container">
+  <label class = "postTextLabel"  style="color: white; text-align: center;">Post Text : </label>
+  <input type="text" formControlName="post"  name="post" id="postText" required>
+  <br>
+  <label class = "postTextLabel"  style="color: white; text-align: center;">Destination : </label>
+  <select formControlName="groupList" name="groupList" id = "groupList">
+    <option [ngValue]="null" readonly disabled >Choose where you want to post: </option>
+    <option [ngValue]="0"> Personal/My profile </option>
+    <option *ngFor ="let onegroup of allGroups" [ngValue] = "onegroup.id">{{onegroup.name}}  </option>
+  </select>
+  </div>
+  <br>
+  <div class="buttonContainer">
+    <button type="submit" id="postSubmit">Post</button>
+  </div>
+  <br>
+
+</form>
+<br>
+<br>
+<br>
+<br>
+<h4>My Posts</h4>
+<app-posts [posts]="allPosts">
+</app-posts>
+<h4>Feed</h4>
+<app-all-posts [posts]="allFeedPosts">
+</app-all-posts>
+
+

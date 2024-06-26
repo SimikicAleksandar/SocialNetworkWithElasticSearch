@@ -1,0 +1,42 @@
+html {
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+  margin-top: 300px;
+  margin-left: 400px;
+  margin-right: 400px;
+  background-color: black; /* Change the background color to black */
+  color: white; /* Change the text color to white */
+  border-radius: 30px;
+  padding: 15px;
+}
+
+#wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+body {
+  background-color: black; /* Change the background color to black */
+  color: white; /* Change the text color to white */
+}
+
+#loginbttn, #registerbttn {
+  width: 150px;
+  height: 40px;
+  border-radius: 30px;
+  background-color: white; /* Change the button background color to white */
+  color: black; /* Change the button text color to black */
+  cursor: pointer;
+  transition: background-color 0.3s; /* Add a smooth transition effect */
+}
+
+#loginbttn:hover, #registerbttn:hover {
+  background-color: burlywood;
+}

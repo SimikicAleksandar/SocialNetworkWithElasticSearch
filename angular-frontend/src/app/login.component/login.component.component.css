@@ -1,0 +1,54 @@
+.maxContainer {
+  background-color: white; /* Change the background color to white */
+  border-radius: 30px;
+  padding: 15px;
+  margin-left: 300px;
+  margin-right: 300px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+.formContainer {
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  gap: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: black; /* Change the title text color to black */
+}
+
+#usernameInput,
+#passwordInput {
+  height: 30px;
+  width: 200px;
+  border-radius: 10px;
+  border: 2px solid black; /* Set the border color to black */
+  padding: 5px; /* Add padding for better spacing */
+}
+
+#usernameLabel, #passwordLabel {
+  font-size: 20px;
+  color: black; /* Change label text color to white */
+}
+
+#loginbttn, #goBack {
+  width: 150px;
+  height: 40px;
+  border-radius: 30px;
+  background-color: black; /* Change the button background color to black */
+  color: white; /* Change the button text color to white */
+  cursor: pointer;
+  transition: background-color 0.3s; /* Add a smooth transition effect */
+}
+
+#loginbttn:hover, #goBack:hover {
+  background-color: burlywood;
+}

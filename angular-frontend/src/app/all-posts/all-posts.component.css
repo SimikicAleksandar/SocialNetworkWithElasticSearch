@@ -1,0 +1,27 @@
+#\{\{post\.id\}\}{
+  border-radius: 10px;
+
+}
+.postsContainer{
+ ;
+  display: flex;
+  flex-direction: row;
+  height:fit-content;
+  padding: 20px;
+  justify-items: center;
+  border-radius: 20px;
+}
+.row1, .row2, .row3{
+  display: flex;
+  height:40px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.buttonsCont{
+  display: flex;
+  height:40px;
+  flex-direction: column;
+  justify-content: center;
+}
+

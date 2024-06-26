@@ -1,0 +1,22 @@
+ <p  *ngIf="a == 1" class="alert alert-success" >Wrong credentials!</p>
+ <div class = "maxContainer">
+  <h1>Welcome back to Sima's app</h1>
+  <div class="formContainer">
+
+    <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+        <label id="usernameLabel">Username: </label>
+        <input  formControlName="username" id= "usernameInput"   required>
+      <br>
+      <br>
+        <label id="passwordLabel">Password: </label>
+        <input formControlName="password" id= "passwordInput" required type="password">
+        <br>
+      <div class = "buttons">
+        <input type="submit" id="loginbttn" value="Login" />
+        <br>
+        <button id="goBack" (click)="back()"  >Go Back</button>
+      </div>
+    </form>
+  </div>
+    <hr>
+ </div>

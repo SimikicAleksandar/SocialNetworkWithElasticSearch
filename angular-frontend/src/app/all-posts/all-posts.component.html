@@ -1,0 +1,26 @@
+<div *ngFor="let post of posts" class = "postsContainer">
+  <div class = "row1">
+    <label>User :  </label>
+    <label>{{post.user}}</label>
+  </div>
+  <hr>
+  <div class="row2">
+    <label>Post uploaded at :  </label>
+    <label>{{post.creationDate}}</label>
+  </div>
+  <hr>
+  <div class="row3">
+    <label>Post Text :  </label>
+    <label>{{post.content}}</label>
+  </div>
+  <hr>
+
+  <div class = "buttonsCont">
+  <button name="LIKE" id="{{post.id}}" (click)="react($event)">Like | {{post.likes}}</button>
+  <button name="DISLIKE" id="{{post.id}}" (click)="react($event)">Dislike | {{post.dislikes}}</button>
+  <button name="HEART" id="{{post.id}}" (click)="react($event)">Heart | {{post.hearts}}</button>
+  </div>
+  <br>
+  <br>
+  <br>
+</div>

@@ -1,0 +1,49 @@
+.black-and-white-theme {
+  filter: grayscale(100%);
+}
+
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+}
+
+.centered-container form {
+  width: 100%;
+}
+
+.centered-container label {
+  text-align: center;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.centered-container input[type="text"],
+.centered-container input[type="hidden"],
+.centered-container input[type="submit"] {
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px;
+  display: block;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.centered-container button {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.centered-container button:hover {
+  opacity: 0.7;
+}

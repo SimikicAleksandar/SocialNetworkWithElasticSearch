@@ -1,0 +1,23 @@
+#\{\{post\.id\}\}{
+  border-radius: 10px;
+  background-color: cornflowerblue;
+}
+.postsContainer{
+  background-color: #04e01a;
+  display: flex;
+  height:fit-content;
+  padding: 20px;
+  border-radius: 20px;
+  justify-content: center;
+}
+
+
+.hide{
+  visibility: hidden;
+}
+
+.show{
+  visibility: visible;
+}
+
+

@@ -1,0 +1,16 @@
+<div *ngFor="let post of posts" class = "postsContainer">
+  <label>User :  </label>
+  <label>{{post.user}}</label>
+  <hr>
+  <label>Post DateTime :  </label>
+  <label>{{post.creationDate}}</label>
+  <hr>
+  <label>Post Text :  </label>
+  <label>{{post.content}}</label>
+  <hr>
+    <button (click)="getElementId($event)" id="{{post.id}}" >delete</button>
+  <button (click)="getElementId($event)" id="{{post.id}}" >edit</button>
+  <br>
+  <br>
+  <br>
+</div>

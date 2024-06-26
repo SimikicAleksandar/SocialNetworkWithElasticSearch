@@ -1,0 +1,27 @@
+
+
+<h1 id="registerHeading">Welcome to Sima's app</h1>
+<form [formGroup]="forma" (ngSubmit)="onSubmit()">
+  <div  class="container">
+    <label>Username : </label>
+    <input type="text" formControlName="username"  name="username" required>
+    <label>Password : </label>
+    <input type="password" formControlName="password" name="password" required>
+    <label>Email : </label>
+    <input type="email" formControlName="email" name="email" required>
+    <label>FirstName: </label>
+    <input type="text" placeholder="" formControlName="fname" name="fname" required>
+    <label>LastName : </label>
+    <input type="text" placeholder="" formControlName="lname" name="lname" required>
+   <br>
+    <div class = "buttonRower">
+      <button type="submit">REGISTER</button>
+    </div>
+    <br>
+  </div>
+</form>
+<hr>
+<div class="buttonContainer">
+  <a href="http://localhost:4200/login"><button>LOGIN</button></a>
+</div>
+

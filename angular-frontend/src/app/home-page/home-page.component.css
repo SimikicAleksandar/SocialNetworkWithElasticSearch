@@ -1,0 +1,58 @@
+.container {
+  background-color: black; /* Change the background color to black */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  justify-content: center;
+  justify-items: center;
+  color: white; /* Change the text color to white */
+}
+h2, h4 {
+  text-align: center;
+}
+.navBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  padding: 15px;
+  margin-bottom: 5px;
+  background-color: black; /* Change the background color to black */
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  color: white; /* Change the text color to white */
+}
+
+#changePassword, #Logout, #groupCreate, #myProfile, #postSubmit {
+  width: 150px;
+  height: 40px;
+  border-radius: 30px;
+  background-color: white; /* Change the button background color to white */
+  color: black; /* Change the button text color to black */
+  cursor: pointer;
+  transition: background-color 0.3s; /* Add a smooth transition effect */
+}
+
+#changePassword:hover, #Logout:hover, #groupCreate:hover, #myProfile:hover, #postSubmit:hover {
+  background-color: black; /* Change the button hover background color to black */
+  color: white; /* Change the button hover text color to white */
+}
+
+.buttonContainer {
+  justify-content: center;
+  display: flex;
+}
+
+.postTextLabel {
+  font-size: 20px;
+  color: black; /* Change the text color to black */
+  font-weight: bold;
+}
+
+#postText, #groupList {
+  height: 30px;
+  border-radius: 10px;
+  border: 2px solid black; /* Set the border color to black */
+}

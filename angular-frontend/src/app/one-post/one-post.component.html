@@ -1,0 +1,11 @@
+<div *ngIf="renderable == 1" class="black-and-white-theme">
+  <div class="centered-container">
+    <form [formGroup]="formPost" (ngSubmit)="onSubmit()">
+      <input type="hidden" formControlName="id" [value]="post.id" name="id"><br><br>
+      <label>Post Text :</label>
+      <input type="text" formControlName="content" [value]="post.content" name="text"><br><br>
+      <input type="submit" value="Save">
+    </form>
+    <button (click)="back()">Go Back</button>
+  </div>
+</div>
