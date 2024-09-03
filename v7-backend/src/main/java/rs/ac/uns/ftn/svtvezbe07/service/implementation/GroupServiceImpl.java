@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.svtvezbe07.model.entity.Group;
 import rs.ac.uns.ftn.svtvezbe07.repository.GroupRepository;
 import rs.ac.uns.ftn.svtvezbe07.model.dto.GroupDTO;
+import rs.ac.uns.ftn.svtvezbe07.service.IndexingGroupService;
+import rs.ac.uns.ftn.svtvezbe07.service.SearchGroupsService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.Optional;
 public class GroupServiceImpl {
     @Autowired
     private GroupRepository groupRepository;
+    @Autowired
+    public IndexingGroupService searchService;
     public List<Group> findAllGroups() {
         return this.groupRepository.findAllByDeleted(false);
     }
@@ -48,6 +52,8 @@ public class GroupServiceImpl {
         newGroup.setGroupAdmin(adminID);
         newGroup.setDeleted(false);
         newGroup = groupRepository.save(newGroup);
+
+        searchService.indexDocument(newGroup);
 
 
         return newGroup;

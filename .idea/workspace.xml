@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="07da76bf-7d78-412e-81e6-b4993e2a4577" name="Changes" comment="" />
+    <list default="true" id="07da76bf-7d78-412e-81e6-b4993e2a4577" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/controller/GroupIndexController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/controller/SearchGroupsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/indexmodel/GroupIndex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/indexrepository/GroupIndexRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/IndexingGroupService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/SearchGroupsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/implementation/IndexingGroupServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/implementation/SearchGroupsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/v7-backend/logstash-ingest-data/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/v7-backend/logstash-ingest-data/application.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/IndexingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/IndexingService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +35,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/Simikic/Desktop/SocialNetworkWithElasticSearch/v7-backend",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -36,6 +48,7 @@
       <option name="presentableId" value="Default" />
       <updated>1719676474515</updated>
       <workItem from="1719676475675" duration="12000" />
+      <workItem from="1719961958571" duration="101000" />
     </task>
     <servers />
   </component>
