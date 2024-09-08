@@ -2,16 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07da76bf-7d78-412e-81e6-b4993e2a4577" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/controller/GroupIndexController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/controller/SearchGroupsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/indexmodel/GroupIndex.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/indexrepository/GroupIndexRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/IndexingGroupService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/SearchGroupsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/implementation/IndexingGroupServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/implementation/SearchGroupsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/controller/SearchPostsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/indexmodel/PostIndex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/indexrepository/PostIndexRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/IndexingPostService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/SearchPostsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/implementation/IndexingPostServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/implementation/SearchPostsServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/v7-backend/logstash-ingest-data/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/v7-backend/logstash-ingest-data/application.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/IndexingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/v7-backend/src/main/java/rs/ac/uns/ftn/svtvezbe07/service/IndexingService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,16 +27,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Simikic/Desktop/SocialNetworkWithElasticSearch/v7-backend",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Simikic/Desktop/SocialNetworkWithElasticSearch/v7-backend&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -49,6 +47,7 @@
       <updated>1719676474515</updated>
       <workItem from="1719676475675" duration="12000" />
       <workItem from="1719961958571" duration="101000" />
+      <workItem from="1725547467753" duration="239000" />
     </task>
     <servers />
   </component>

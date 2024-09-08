@@ -9,6 +9,7 @@ import rs.ac.uns.ftn.svtvezbe07.model.entity.Reaction;
 import rs.ac.uns.ftn.svtvezbe07.model.entity.ReactionType;
 import rs.ac.uns.ftn.svtvezbe07.model.entity.User;
 import rs.ac.uns.ftn.svtvezbe07.repository.PostRepository;
+import rs.ac.uns.ftn.svtvezbe07.service.IndexingPostService;
 import rs.ac.uns.ftn.svtvezbe07.service.UserService;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,8 @@ public class PostServiceImpl {
     private UserService userService;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    public IndexingPostService searchService;
     public Post createPost(String content, long userID) {
 
 
@@ -33,6 +36,9 @@ public class PostServiceImpl {
         newPost.setUser(userID);
         newPost.setDeleted(false);
         newPost = postRepository.save(newPost);
+
+        searchService.indexDocument(newPost);
+
         return newPost;
     }
     public void deletePost(Long Id) {
