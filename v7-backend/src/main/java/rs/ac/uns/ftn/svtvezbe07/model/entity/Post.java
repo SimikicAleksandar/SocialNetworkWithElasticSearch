@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.svtvezbe07.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,5 +37,7 @@ public class Post {
     @Column(nullable = true)
     private Boolean deleted;
 
-
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private File file;
 }

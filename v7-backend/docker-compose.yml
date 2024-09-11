@@ -55,8 +55,8 @@ services:
       - 9000:9000
       - 9090:9090
     environment:
-      - MINIO_ROOT_USER=ROOTUSER
-      - MINIO_ROOT_PASSWORD=CHANGEME123
+      - MINIO_ROOT_USER=ROOT
+      - MINIO_ROOT_PASSWORD=ROOTROOT
     command: server /data --console-address ":9090"
     volumes:
       - minio-data:/data

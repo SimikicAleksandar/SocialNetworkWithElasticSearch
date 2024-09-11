@@ -2,10 +2,10 @@ package rs.ac.uns.ftn.svtvezbe07.service.implementation;
 
 import rs.ac.uns.ftn.svtvezbe07.exceptionhandling.exception.LoadingException;
 import rs.ac.uns.ftn.svtvezbe07.exceptionhandling.exception.StorageException;
-import rs.ac.uns.ftn.svtvezbe07.indexmodel.DummyIndex;
-import rs.ac.uns.ftn.svtvezbe07.indexrepository.DummyIndexRepository;
-import rs.ac.uns.ftn.svtvezbe07.model.entity.DummyTable;
-import rs.ac.uns.ftn.svtvezbe07.repository.DummyRepository;
+import rs.ac.uns.ftn.svtvezbe07.indexmodel.FileIndex;
+import rs.ac.uns.ftn.svtvezbe07.indexrepository.FileIndexRepository;
+import rs.ac.uns.ftn.svtvezbe07.model.entity.File;
+import rs.ac.uns.ftn.svtvezbe07.repository.FileRepository;
 import rs.ac.uns.ftn.svtvezbe07.service.FileService;
 import rs.ac.uns.ftn.svtvezbe07.service.IndexingService;
 
@@ -28,21 +28,25 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class IndexingServiceImpl implements IndexingService {
 
-    private final DummyIndexRepository dummyIndexRepository;
-
-    private final DummyRepository dummyRepository;
-
     private final FileService fileService;
+    private final FileRepository fileRepository;
+
+    private final FileIndexRepository fileIndexRepository;
 
     private final LanguageDetector languageDetector;
 
 
     @Override
     @Transactional
-    public String indexDocument(MultipartFile documentFile) {
-        var newEntity = new DummyTable();
-        var newIndex = new DummyIndex();
+    public File indexDocument(MultipartFile documentFile, String type, Long id) {
+        var newEntity = new File();
+        var newIndex = new FileIndex();
 
+        if (Objects.equals(type, "group")) {
+            newIndex.setGroupId(id);
+        } else if (Objects.equals(type, "post")) {
+            newIndex.setPostId(id);
+        }
         var title = Objects.requireNonNull(documentFile.getOriginalFilename()).split("\\.")[0];
         newIndex.setTitle(title);
         newEntity.setTitle(title);
@@ -53,19 +57,19 @@ public class IndexingServiceImpl implements IndexingService {
         } else {
             newIndex.setContentEn(documentContent);
         }
-        newEntity.setTitle(title);
-//uzima opis i title grupe i umesto dokumenta cuva grupu slepce
+
         var serverFilename = fileService.store(documentFile, UUID.randomUUID().toString());
         newIndex.setServerFilename(serverFilename);
         newEntity.setServerFilename(serverFilename);
 
         newEntity.setMimeType(detectMimeType(documentFile));
-        var savedEntity = dummyRepository.save(newEntity);
+        var savedEntity = fileRepository.save(newEntity);
 
         newIndex.setDatabaseId(savedEntity.getId());
-        dummyIndexRepository.save(newIndex);
+        fileIndexRepository.save(newIndex);
 
-        return serverFilename;
+
+        return newEntity;
     }
 
     private String extractDocumentContent(MultipartFile multipartPdfFile) {
@@ -99,13 +103,13 @@ public class IndexingServiceImpl implements IndexingService {
         try {
             trueMimeType = contentAnalyzer.detect(file.getBytes());
             specifiedMimeType =
-                Files.probeContentType(Path.of(Objects.requireNonNull(file.getOriginalFilename())));
+                    Files.probeContentType(Path.of(Objects.requireNonNull(file.getOriginalFilename())));
         } catch (IOException e) {
             throw new StorageException("Failed to detect mime type for file.");
         }
 
         if (!trueMimeType.equals(specifiedMimeType) &&
-            !(trueMimeType.contains("zip") && specifiedMimeType.contains("zip"))) {
+                !(trueMimeType.contains("zip") && specifiedMimeType.contains("zip"))) {
             throw new StorageException("True mime type is different from specified one, aborting.");
         }
 

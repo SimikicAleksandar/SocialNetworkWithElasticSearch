@@ -1,10 +1,13 @@
 package rs.ac.uns.ftn.svtvezbe07.model.entity;
 
+import co.elastic.clients.util.DateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +31,7 @@ public class Group {
     private String description;
 
     @Column (name = "creationDate", nullable = false)
-    private LocalDateTime creationDate;
+    private LocalDate creationDate;
 
     @Column(nullable = false)
     private Long GroupAdmin;
@@ -38,5 +41,12 @@ public class Group {
 
     @Column(name = "deleted")
     private Boolean deleted;
+    @Column(nullable = false)
+    private boolean isSuspended;
+    @OneToOne(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private File file;
 
+    @Column
+    private String suspendedReason;
 }

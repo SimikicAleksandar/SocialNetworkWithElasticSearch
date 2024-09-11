@@ -3,19 +3,23 @@ package rs.ac.uns.ftn.svtvezbe07.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.svtvezbe07.model.dto.DocumentFileDTO;
 import rs.ac.uns.ftn.svtvezbe07.model.dto.PostDTO;
 import rs.ac.uns.ftn.svtvezbe07.model.dto.PostGroupDTO;
 import rs.ac.uns.ftn.svtvezbe07.model.dto.PostSaveDTO;
 import rs.ac.uns.ftn.svtvezbe07.model.dto.postupdateDTO;
+import rs.ac.uns.ftn.svtvezbe07.model.entity.File;
 import rs.ac.uns.ftn.svtvezbe07.model.entity.Group;
 import rs.ac.uns.ftn.svtvezbe07.model.entity.Post;
 import rs.ac.uns.ftn.svtvezbe07.model.entity.User;
 import rs.ac.uns.ftn.svtvezbe07.security.TokenUtils;
+import rs.ac.uns.ftn.svtvezbe07.service.IndexingService;
 import rs.ac.uns.ftn.svtvezbe07.service.UserService;
 import rs.ac.uns.ftn.svtvezbe07.service.implementation.GroupServiceImpl;
 import rs.ac.uns.ftn.svtvezbe07.service.implementation.PostServiceImpl;
@@ -46,6 +50,9 @@ public class PostController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    IndexingService indexingService;
+
     @PostMapping("/create")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public Post createPost(Principal user, @RequestBody @Validated PostSaveDTO dto) {
@@ -56,6 +63,16 @@ public class PostController {
         u.getPosts().add(post);
         userService.saveUser(u);
         return post;
+    }
+
+    @PostMapping("/add_file/{id}")
+    public ResponseEntity<Post> addFile(@PathVariable Long id, @ModelAttribute DocumentFileDTO documentFile) {
+        Post post = postService.getPost(id);
+        File file = indexingService.indexDocument(documentFile.file(), "post", id);
+        post.setFile(file);
+        file.setPost(post);
+        postService.save(post);
+        return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
 
     @PostMapping("/createInGroup")

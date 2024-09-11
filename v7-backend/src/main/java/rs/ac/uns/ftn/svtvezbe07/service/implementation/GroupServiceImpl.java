@@ -9,6 +9,7 @@ import rs.ac.uns.ftn.svtvezbe07.model.dto.GroupDTO;
 import rs.ac.uns.ftn.svtvezbe07.service.IndexingGroupService;
 import rs.ac.uns.ftn.svtvezbe07.service.SearchGroupsService;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +48,7 @@ public class GroupServiceImpl {
 
         Group newGroup = new Group();
         newGroup.setName(dto.getName());
-        newGroup.setCreationDate(LocalDateTime.now());
+        newGroup.setCreationDate(LocalDateTime.now().toLocalDate());
         newGroup.setDescription(dto.getDescription());
         newGroup.setGroupAdmin(adminID);
         newGroup.setDeleted(false);
@@ -57,5 +58,15 @@ public class GroupServiceImpl {
 
 
         return newGroup;
+    }
+    @Transactional
+    public Group save(Group group){
+        groupRepository.save(group);
+        searchService.indexDocument(group);
+        return group;
+    }
+    @Transactional
+    public Group getGroup(Long id) {
+        return groupRepository.findById(id).get();
     }
 }

@@ -5,6 +5,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.json.JsonData;
 import lombok.RequiredArgsConstructor;
+import org.apache.tika.language.detect.LanguageDetector;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +16,10 @@ import org.springframework.data.elasticsearch.core.SearchHitSupport;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.svtvezbe07.exceptionhandling.exception.MalformedQueryException;
+import rs.ac.uns.ftn.svtvezbe07.indexmodel.FileIndex;
 import rs.ac.uns.ftn.svtvezbe07.indexmodel.PostIndex;
 import rs.ac.uns.ftn.svtvezbe07.indexrepository.PostIndexRepository;
+import rs.ac.uns.ftn.svtvezbe07.service.SearchFilesService;
 import rs.ac.uns.ftn.svtvezbe07.service.SearchPostsService;
 
 import javax.transaction.Transactional;
@@ -27,6 +30,8 @@ import java.util.List;
 public class SearchPostsServiceImpl implements SearchPostsService {
     private final ElasticsearchOperations elasticsearchTemplate;
     private final PostIndexRepository indexRepository;
+    private final LanguageDetector languageDetector;
+    private final SearchFilesService searchFilesService;
 
     @Override
     public PostIndex updatePostLikeNum(Long id) {
@@ -42,8 +47,19 @@ public class SearchPostsServiceImpl implements SearchPostsService {
 
     @Override
     public Page<PostIndex> simpleSearch(List<String> keywords, Pageable pageable) {
+
+        // Search for files related to posts
+        Page<FileIndex> fileResults = searchFilesService.simpleSearch(keywords, pageable, "post");
+
+        // Extract post ids from fileResults
+        List<FieldValue> postIdsFromFiles = fileResults.getContent().stream()
+                .map(FileIndex::getPostId)
+                .distinct()
+                .map(FieldValue::of)
+                .toList();
+
         var searchQueryBuilder =
-                new NativeQueryBuilder().withQuery(buildSimpleSearchQuery(keywords))
+                new NativeQueryBuilder().withQuery(buildSimpleSearchQuery(keywords, postIdsFromFiles))
                         .withPageable(pageable);
 
         return runQuery(searchQueryBuilder.build());
@@ -71,19 +87,18 @@ public class SearchPostsServiceImpl implements SearchPostsService {
 
         List<String> fileKeywords = new ArrayList<>();
         fileKeywords.add(valueFIle);
-//        // Search for files related to groups
-//
-//        Page<FileIndex> fileResults = fileSearchService.simpleSearch(fileKeywords, pageable, "post");
-//
-//        // Extract post ids from fileResults
-//        List<FieldValue> postIdsFromFiles = fileResults.getContent().stream()
-//                .map(FileIndex::getPostId)
-//                .distinct()
-//                .map(FieldValue::of)
-//                .toList();
+
+        Page<FileIndex> fileResults = searchFilesService.simpleSearch(fileKeywords, pageable, "post");
+
+        // Extract post ids from fileResults
+        List<FieldValue> postIdsFromFiles = fileResults.getContent().stream()
+                .map(FileIndex::getPostId)
+                .distinct()
+                .map(FieldValue::of)
+                .toList();
 
         var searchQueryBuilder =
-                new NativeQueryBuilder().withQuery(buildAdvancedSearchQuery(expression, operation))
+                new NativeQueryBuilder().withQuery(buildAdvancedSearchQuery(expression, operation, postIdsFromFiles))
                         .withPageable(pageable);
 
         return runQuery(searchQueryBuilder.build());
@@ -91,7 +106,7 @@ public class SearchPostsServiceImpl implements SearchPostsService {
 
 
 
-    private Query buildSimpleSearchQuery(List<String> tokens) {
+    private Query buildSimpleSearchQuery(List<String> tokens,  List<FieldValue> postIdsFromFiles) {
         return BoolQuery.of(q -> q.must(mb -> mb.bool(b -> {
             tokens.forEach(token -> {
                 // Match Query - full-text search with fuzziness
@@ -106,7 +121,9 @@ public class SearchPostsServiceImpl implements SearchPostsService {
 
             });
             // Ensure documents have a post ID from the file search results
-
+            if (!postIdsFromFiles.isEmpty()) {
+                b.should(sb -> sb.terms(t -> t.field("id").terms(tq -> tq.value(postIdsFromFiles))));
+            }
             return b;
         })))._toQuery();
     }
@@ -122,7 +139,7 @@ public class SearchPostsServiceImpl implements SearchPostsService {
         })))._toQuery();
     }
 
-    private Query buildAdvancedSearchQuery(List<String> operands, String operation) {
+    private Query buildAdvancedSearchQuery(List<String> operands, String operation, List<FieldValue> IdsFromFiles) {
         return BoolQuery.of(q -> q.must(mb -> mb.bool(b -> {
             var field1 = operands.get(0).split(":")[0];
             var value1 = operands.get(0).split(":")[1];
@@ -134,11 +151,17 @@ public class SearchPostsServiceImpl implements SearchPostsService {
                     b.must(sb -> sb.match(
                             m -> m.field(field1).fuzziness(Fuzziness.ONE.asString()).query(value1)));
                     b.must(sb -> sb.match(m -> m.field(field2).query(value2)));
+                    if (!IdsFromFiles.isEmpty()) {
+                        b.must(sb -> sb.terms(t -> t.field("id").terms(tq -> tq.value(IdsFromFiles))));
+                    }
                     break;
                 case "OR":
                     b.should(sb -> sb.match(
                             m -> m.field(field1).fuzziness(Fuzziness.ONE.asString()).query(value1)));
                     b.should(sb -> sb.match(m -> m.field(field2).query(value2)));
+                    if (!IdsFromFiles.isEmpty()) {
+                        b.should(sb -> sb.terms(t -> t.field("id").terms(tq -> tq.value(IdsFromFiles))));
+                    }
                     break;
             }
 

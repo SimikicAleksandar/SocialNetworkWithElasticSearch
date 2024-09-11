@@ -12,6 +12,7 @@ import rs.ac.uns.ftn.svtvezbe07.repository.PostRepository;
 import rs.ac.uns.ftn.svtvezbe07.service.IndexingPostService;
 import rs.ac.uns.ftn.svtvezbe07.service.UserService;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -115,5 +116,15 @@ public class PostServiceImpl {
             allPostsList.add(postDTO);
         }
         return allPostsList;
+    }
+    public Post getPost(Long id) {
+        return postRepository.findById(id).get();
+    }
+
+    @Transactional
+    public Post save(Post post) {
+        postRepository.save(post);
+        searchService.indexDocument(post);
+        return post;
     }
 }

@@ -3,16 +3,20 @@ package rs.ac.uns.ftn.svtvezbe07.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.svtvezbe07.model.dto.DocumentFileDTO;
 import rs.ac.uns.ftn.svtvezbe07.model.dto.GroupDTO;
 import rs.ac.uns.ftn.svtvezbe07.model.dto.GroupReceivedRequestDTO;
+import rs.ac.uns.ftn.svtvezbe07.model.entity.File;
 import rs.ac.uns.ftn.svtvezbe07.model.entity.Group;
 import rs.ac.uns.ftn.svtvezbe07.model.entity.User;
 import rs.ac.uns.ftn.svtvezbe07.security.TokenUtils;
+import rs.ac.uns.ftn.svtvezbe07.service.IndexingService;
 import rs.ac.uns.ftn.svtvezbe07.service.UserService;
 import rs.ac.uns.ftn.svtvezbe07.service.implementation.GroupServiceImpl;
 
@@ -39,6 +43,18 @@ public class GroupController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    IndexingService indexingService;
+
+    @PostMapping("/add_file/{id}")
+    public ResponseEntity<Group> addFile(@PathVariable Long id, @ModelAttribute DocumentFileDTO documentFile) {
+        Group group = groupService.getGroup(id);
+        File file = indexingService.indexDocument(documentFile.file(), "group", id);
+        group.setFile(file);
+        file.setGroup(group);
+        groupService.save(group);
+        return new ResponseEntity<>(group, HttpStatus.CREATED);
+    }
     @GetMapping("/getAll")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public List<Group> getAllGroups(Principal user) {

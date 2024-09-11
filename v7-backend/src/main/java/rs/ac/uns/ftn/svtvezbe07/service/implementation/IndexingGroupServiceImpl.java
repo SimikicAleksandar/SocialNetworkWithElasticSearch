@@ -42,9 +42,9 @@ public class IndexingGroupServiceImpl implements IndexingGroupService {
 
         var documentContent = extractDocumentContent(documentFile);
         if (detectLanguage(documentContent).equals("SR")) {
-            newGroupIndex.setDescription(documentContent);
+            newGroupIndex.setDescriptionSr(documentContent);
         } else {
-            newGroupIndex.setDescription(documentContent);
+            newGroupIndex.setDescriptionEn(documentContent);
         }
 
         var serverFilename = fileService.store(documentFile, UUID.randomUUID().toString());
@@ -54,7 +54,7 @@ public class IndexingGroupServiceImpl implements IndexingGroupService {
         newGroup.setDescription(detectMimeType(documentFile));
         var savedGroup = groupRepository.save(newGroup);
 
-        newGroupIndex.setId(savedGroup.getId().toString());
+        newGroupIndex.setId(savedGroup.getId());
         groupIndexRepository.save(newGroupIndex);
 
         return serverFilename;
@@ -63,7 +63,13 @@ public class IndexingGroupServiceImpl implements IndexingGroupService {
     @Override
     @Transactional
     public String indexDocument(Group group) {
-        GroupIndex newEntity = new GroupIndex(group.getId().toString(), group.getName(), group.getDescription(), group.getCreationDate().toLocalDate(), group.getGroupAdmin(), group.getDeleted());
+        GroupIndex newEntity = new GroupIndex(group.getId(), group.getName(), group.getCreationDate(), group.isSuspended(), group.getSuspendedReason());
+
+        if (detectLanguage(group.getDescription()).equals("SR")) {
+            newEntity.setDescriptionSr(group.getDescription());
+        } else {
+            newEntity.setDescriptionEn(group.getDescription());
+        }
 
         groupIndexRepository.save(newEntity);
 
