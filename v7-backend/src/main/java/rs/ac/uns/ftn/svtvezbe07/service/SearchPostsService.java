@@ -10,8 +10,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 @Service
 public interface SearchPostsService {
-//    @Transactional
-//    String indexDocument(Post post);
+    @Transactional
+    String indexDocument(Post post);
 
     PostIndex updatePostLikeNum(Long id);
 

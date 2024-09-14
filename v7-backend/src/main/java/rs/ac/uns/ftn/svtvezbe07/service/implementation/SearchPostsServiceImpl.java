@@ -19,6 +19,7 @@ import rs.ac.uns.ftn.svtvezbe07.exceptionhandling.exception.MalformedQueryExcept
 import rs.ac.uns.ftn.svtvezbe07.indexmodel.FileIndex;
 import rs.ac.uns.ftn.svtvezbe07.indexmodel.PostIndex;
 import rs.ac.uns.ftn.svtvezbe07.indexrepository.PostIndexRepository;
+import rs.ac.uns.ftn.svtvezbe07.model.entity.Post;
 import rs.ac.uns.ftn.svtvezbe07.service.SearchFilesService;
 import rs.ac.uns.ftn.svtvezbe07.service.SearchPostsService;
 
@@ -32,6 +33,32 @@ public class SearchPostsServiceImpl implements SearchPostsService {
     private final PostIndexRepository indexRepository;
     private final LanguageDetector languageDetector;
     private final SearchFilesService searchFilesService;
+
+
+    @Override
+    @Transactional
+    public String indexDocument(Post post) {
+        PostIndex newEntity = new PostIndex(post.getId(), post.getTitle(), post.getCreationDate().toLocalDate());
+
+        if (detectLanguage(post.getContent()).equals("SR")) {
+            newEntity.setContentSr(post.getContent());
+        } else {
+            newEntity.setContentEn(post.getContent());
+        }
+
+        indexRepository.save(newEntity);
+
+        return post.getTitle();
+    }
+
+    private String detectLanguage(String text) {
+        var detectedLanguage = languageDetector.detect(text).getLanguage().toUpperCase();
+        if (detectedLanguage.equals("HR")) {
+            detectedLanguage = "SR";
+        }
+
+        return detectedLanguage;
+    }
 
     @Override
     public PostIndex updatePostLikeNum(Long id) {
