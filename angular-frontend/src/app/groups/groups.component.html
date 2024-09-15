@@ -50,7 +50,10 @@
       <label>{{ group.name }}</label>
       <br>
       <label>Group Description: </label>
-      <label>{{group.description}}</label>
+      <label *ngIf="group.descriptionEn; else fallbackDescription">{{group.descriptionEn}}</label>
+      <ng-template #fallbackDescription>
+        {{group.description}}
+      </ng-template>
       <br>
       <button class="btn delete-btn" (click)="getElementId($event)" id="{{group.id}}">delete</button>
       <button class="btn edit-btn" (click)="getElementId($event)" id="{{group.id}}">edit</button>

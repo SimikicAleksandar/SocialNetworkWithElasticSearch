@@ -72,8 +72,18 @@ public class SearchGroupsServiceImpl implements SearchGroupsService {
 
     @Override
     public Page<GroupIndex> simpleSearch(List<String> keywords, Pageable pageable) {
+        // Search for files related to groups
+        Page<FileIndex> fileResults = searchFilesService.simpleSearch(keywords, pageable, "group");
+
+        // Extract group ids from fileResults
+        List<FieldValue> groupIdsFromFiles = fileResults.getContent().stream()
+                .map(FileIndex::getGroupId)
+                .distinct()
+                .map(FieldValue::of)
+                .toList();
+
         var searchQueryBuilder =
-                new NativeQueryBuilder().withQuery(buildSimpleSearchQuery(keywords))
+                new NativeQueryBuilder().withQuery(buildSimpleSearchQuery(keywords, groupIdsFromFiles))
                         .withPageable(pageable);
         return runQuery(searchQueryBuilder.build());
     }
@@ -108,13 +118,25 @@ public class SearchGroupsServiceImpl implements SearchGroupsService {
         return runQuery(searchQueryBuilder.build());
     }
 
-    private Query buildSimpleSearchQuery(List<String> tokens) {
+    private Query buildSimpleSearchQuery(List<String> tokens, List<FieldValue> groupIdsFromFiles) {
         return BoolQuery.of(q -> q.must(mb -> mb.bool(b -> {
             tokens.forEach(token -> {
+                // Match Query - full-text search with fuzziness
+                // Matches documents with fuzzy matching in "name" field
                 b.should(sb -> sb.match(
                         m -> m.field("name").fuzziness(Fuzziness.ONE.asString()).query(token)));
-                b.should(sb -> sb.match(m -> m.field("description").query(token)));
+
+                // Match Query - full-text search in other fields
+                // Matches documents with full-text search in other fields
+                b.should(sb -> sb.match(m -> m.field("description_sr").query(token)));
+                b.should(sb -> sb.match(m -> m.field("description_en").query(token)));
+
             });
+            // Ensure documents have a group ID from the file search results
+            if (!groupIdsFromFiles.isEmpty()) {
+                b.should(sb -> sb.terms(t -> t.field("id").terms(tq -> tq.value(groupIdsFromFiles))));
+            }
+
             return b;
         })))._toQuery();
     }
