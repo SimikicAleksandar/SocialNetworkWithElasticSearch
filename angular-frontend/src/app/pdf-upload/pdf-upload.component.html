@@ -1,0 +1,25 @@
+<div class="pdf-upload-container">
+    <h3>Upload PDF</h3>
+    <form (ngSubmit)="onUpload()" #uploadForm="ngForm" class="upload-form">
+      <div class="form-group">
+        <label for="groupSelect">Select Group:</label>
+        <select id="groupSelect" [(ngModel)]="selectedGroupId" name="groupSelect" required>
+          <option [ngValue]="null" disabled>Select a group</option>
+          <option *ngFor="let group of allGroups" [ngValue]="group.id">{{ group.name }}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="fileInput">Choose PDF:</label>
+        <input type="file" id="fileInput" (change)="onFileChange($event)" accept=".pdf" required />
+      </div>
+  
+      <button type="submit" [disabled]="!selectedFile || !selectedGroupId" class="upload-btn">Upload</button>
+      <a href="http://localhost:4200/groups" class="button-link">Go back to groups</a>
+
+  
+    </form>
+
+    <p *ngIf="uploadSuccess" class="success-msg">PDF uploaded successfully!</p>
+    <p *ngIf="uploadError" class="error-msg">{{ uploadError }}</p>
+  </div>

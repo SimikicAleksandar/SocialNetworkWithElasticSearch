@@ -1,0 +1,105 @@
+/* Container styling */
+.pdf-upload-container {
+  background-color: #1c1c1c;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Label styling */
+label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #f0f0f0;
+}
+
+/* Select and input styling */
+select, input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+select:focus, input[type="file"]:focus {
+  outline: none;
+  border: 1px solid #fff;
+}
+
+/* Button styling */
+.upload-btn {
+  width: 100%;
+  background-color: #444;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-btn:hover {
+  background-color: #666;
+}
+
+.upload-btn:disabled {
+  background-color: #333;
+  cursor: not-allowed;
+}
+
+/* Success and error messages */
+.success-msg {
+  color: #4caf50;
+  margin-top: 10px;
+}
+
+.error-msg {
+  color: #f44336;
+  margin-top: 10px;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 600px) {
+  .pdf-upload-container {
+    padding: 15px;
+  }
+
+  .upload-btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  select, input[type="file"] {
+    font-size: 13px;
+  }
+
+  /* Button with link styling */
+.button-link {
+  display: inline-block;
+  text-decoration: none; /* Remove underline */
+  background-color: #444;
+  color: #fff;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.button-link:hover {
+  background-color: #666;
+}
+}

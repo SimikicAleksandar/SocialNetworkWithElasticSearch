@@ -4,8 +4,9 @@ import {ApiService} from "../api-service.service";
 import {UserServiceService} from "../user-service.service";
 import {ConfigServiceService} from "./config-service.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {HttpHeaders} from "@angular/common/http";
-
+import { HttpClient, HttpHeaders } from "@angular/common/http"; // Add HttpClient
+import { Observable } from 'rxjs'; // Add Observable
+import { HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +19,7 @@ export class GroupService {
     private config: ConfigServiceService,
     private router: Router,
     private route: ActivatedRoute,
-
+    private http: HttpClient // Inject HttpClient
   ) {
 
   }
@@ -119,4 +120,17 @@ export class GroupService {
     return this.apiService.post(this.config._groupone_url,body);
 
   }
+
+ // Adjusted return type to Observable instead of subscribing here
+ simpleSearch(keywords: string[]): Observable<any> {
+  return this.http.post<any>('http://localhost:8080/api/searchGroups/simple', { keywords });
+}
+
+advancedSearch(keywords: string[]): Observable<any> {
+  const body = {
+    keywords
+  };
+  return this.http.post<any>('http://localhost:8080/api/searchGroups/advanced', body);
+}
+
 }

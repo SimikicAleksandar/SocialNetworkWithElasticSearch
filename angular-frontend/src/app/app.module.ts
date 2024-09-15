@@ -33,6 +33,7 @@ import { OneGroupComponent } from './one-group/one-group.component';
 import {MyProfileComponent} from "./my-profile/my-profile.component";
 import {AllPostsComponent} from "./all-posts/all-posts.component";
 import {ReactionCommentService} from "./Services/reaction-comment.service";
+import { PdfUploadComponent } from './pdf-upload/pdf-upload.component';
 const routes: Routes = [
   { path: '', component: HomeComponentComponent },
   { path: 'login', component: LoginComponent},
@@ -63,7 +64,8 @@ const routes: Routes = [
     GroupCreateComponent,
     PostsComponent,
     GroupsComponent,
-    OneGroupComponent
+    OneGroupComponent,
+    PdfUploadComponent
   ],
   imports: [
     BrowserModule,

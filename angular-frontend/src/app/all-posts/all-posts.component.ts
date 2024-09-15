@@ -12,10 +12,6 @@ import {ReactionCommentService} from "../Services/reaction-comment.service";
 export class AllPostsComponent {
   constructor(private postService : PostService, private reactionCommentsService: ReactionCommentService, private router: Router,
               private route: ActivatedRoute,) {
-
-
-
-
   }
   @Input() posts:any;
 

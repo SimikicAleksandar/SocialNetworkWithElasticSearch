@@ -30,9 +30,30 @@
 <br>
 <br>
 <br>
-<h4>My Posts</h4>
-<app-posts [posts]="allPosts">
-</app-posts>
+<h4>Search posts</h4>
+<!-- Search Bar for Posts -->
+<div class="search-container">
+  <p>SIMPLE SEARCH FOR POSTS</p>
+  <input type="text" [(ngModel)]="searchKeyword" placeholder="Search posts">
+  <button class="btn" (click)="onSearch()">Search</button>
+</div>
+
+<!-- Display posts only if search has been done -->
+<div *ngIf="b === 1 && allPosts.length > 0">
+  <div *ngFor="let post of allPosts">
+    <div>
+      <p>Post Content (English): {{ post.contentEn }}</p>
+      <p>Creation Date: {{ post.creationDate | date:'short' }}</p> <!-- Format the date if needed -->
+      <p>Like Number: {{ post.likeNumber }}</p>
+      <p>Title: {{ post.title || 'No Title' }}</p> <!-- Fallback in case title is null -->
+    </div>
+  </div>
+</div>
+
+<!-- Display a message if no posts found -->
+<div *ngIf="b === 1 && allPosts.length === 0">
+  <p>No posts found.</p>
+</div>
 <h4>Feed</h4>
 <app-all-posts [posts]="allFeedPosts">
 </app-all-posts>

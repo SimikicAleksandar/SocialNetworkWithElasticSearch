@@ -1,16 +1,62 @@
-<div *ngIf="b ==1">
-<div *ngFor="let group of groups"  >
-  <br>
-  <hr>
-  <label>Group Name :  </label>
-  <label>{{group.name}}</label>
-  <br>
-  <label>Group Description :  </label>
-  <label>{{group.description}}</label>
-  <br>
-  <button class="btn delete-btn" (click)="getElementId($event)" id="{{group.id}}" >delete</button>
-  <button class="btn edit-btn" (click)="getElementId($event)" id="{{group.id}}" >edit</button>
-
-
+<div class="search-container">
+  <h3>Simple Search for Groups</h3>
+  <input type="text" [(ngModel)]="searchKeyword" placeholder="Simple search for groups">
+  <button class="btn" (click)="onSearch()">Search</button>
 </div>
+
+<div class="buttonContainer">
+  <a href="http://localhost:4200/upload-pdf">Upload a pdf file</a>
+</div>
+
+<div class="advanced-search-container">
+  <h3>Advanced Search for Groups</h3>
+  <form (ngSubmit)="onAdvancedSearch()">
+    <label for="searchName">Name:</label>
+    <input type="text" [(ngModel)]="searchName" name="searchName" id="searchName" />
+
+    <label for="searchDescription">Description:</label>
+    <input type="text" [(ngModel)]="searchDescription" name="searchDescription" id="searchDescription" />
+
+     <!-- New field for searching PDF content -->
+    <label for="searchPdfContent">PDF Content:</label>
+    <input type="text" [(ngModel)]="searchPdfContent" name="searchPdfContent" id="searchPdfContent" placeholder="Search text in PDFs" />
+  
+    <label for="operator">Operator:</label>
+    <select [(ngModel)]="searchOperator" name="operator" id="operator">
+      <option value="OR">OR</option>
+      <option value="AND">AND</option>
+    </select>
+  
+    <button type="submit">Search</button>
+  </form>
+
+  <div *ngIf="advancedResults.length > 0">
+    <div *ngFor="let group of advancedResults">
+      <br>
+      <hr>
+   <h3>Advanced Search Result</h3>
+      <p>Group Name: {{ group.name }}</p>
+      <p>Group Description: {{ group.descriptionEn }}</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="b === 1">
+  <div *ngIf="groups.length > 0; else noResults">
+    <div *ngFor="let group of groups">
+      <br>
+      <hr>
+      <label>Group Name: </label>
+      <label>{{ group.name }}</label>
+      <br>
+      <label>Group Description: </label>
+      <label>{{group.description}}</label>
+      <br>
+      <button class="btn delete-btn" (click)="getElementId($event)" id="{{group.id}}">delete</button>
+      <button class="btn edit-btn" (click)="getElementId($event)" id="{{group.id}}">edit</button>
+    </div>
+  </div>
+  <ng-template #noResults>
+    <p>No results found.</p>
+  </ng-template>
 </div>

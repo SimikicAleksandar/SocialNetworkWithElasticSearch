@@ -4,7 +4,8 @@ import {ApiService} from "../api-service.service";
 import {UserServiceService} from "../user-service.service";
 import {ConfigServiceService} from "./config-service.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http"; // Add HttpClient
+import { Observable } from 'rxjs'; // Add Observable
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,9 @@ export class PostService {
                 private userService: UserServiceService,
                 private config: ConfigServiceService,
                 private router: Router,
-                private route: ActivatedRoute,) { }
+                private route: ActivatedRoute,
+                private http: HttpClient // Inject HttpClient
+              ) { }
 
   delete(id:any) {
 
@@ -122,4 +125,11 @@ export class PostService {
     const body =a;
     return this.apiService.post(this.config._postone_url,body);
   }
+
+   // Adjusted return type to Observable instead of subscribing here
+ simpleSearch(keywords: string[]): Observable<any> {
+  return this.http.post<any>('http://localhost:8080/api/searchPosts/simple', { keywords });
+}
+
+
 }

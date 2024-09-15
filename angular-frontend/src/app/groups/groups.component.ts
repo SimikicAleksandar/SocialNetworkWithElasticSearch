@@ -11,7 +11,16 @@ import {FormControl, FormGroup} from "@angular/forms";
 })
 export class GroupsComponent {
  groups:any;
+ searchKeyword: string = ''; // For the search input
+ errorMessage: string = '';
  b = 0;
+
+searchName: string = '';
+searchDescription: string = '';
+searchPdfContent: string = ''; // New input for searching PDF content
+searchOperator: string = 'OR'; 
+advancedResults: any[] = [];
+
   constructor(
     private authService: AuthServiceService,
     private router: Router,
@@ -62,7 +71,55 @@ export class GroupsComponent {
   }
 
 
+  onSearch() {
+    if (this.searchKeyword.trim() === '') {
+      this.errorMessage = 'Please enter a search keyword';
+      return;
+    }
+    this.errorMessage = '';
+  
+    this.groupService.simpleSearch([this.searchKeyword])
+      .subscribe({
+        next: (response) => {
+          console.log('Search Result:', response);  // Log the response for debugging
+          if (response && response.content && Array.isArray(response.content)) {
+            this.groups = response.content;  // Extract the content array
+          } else {
+            this.groups = [];
+          }
+          this.b = 1;
+        },
+        error: (err) => {
+          this.errorMessage = 'Error occurred during search';
+          console.error(err);  // Log error for debugging
+        }
+      });
+  }
 
-
-
+  onAdvancedSearch() {
+    if (!this.searchName && !this.searchDescription && !this.searchPdfContent) {
+      this.errorMessage = 'Please enter at least one search criterion';
+      return;
+    }
+    this.errorMessage = '';
+    
+    const keywords = [
+      `name:${this.searchName}`,
+      `descriptionEn:${this.searchDescription}`,
+      `pdfsranje:${this.searchPdfContent}`,
+      this.searchOperator
+    ];
+  
+    this.groupService.advancedSearch(keywords).subscribe({
+      next: (response) => {
+        console.log('Advanced Search Result:', response); // Log response for debugging
+        this.advancedResults = response.content || [];
+      },
+      error: (err) => {
+        this.errorMessage = 'Error occurred during search';
+        console.error(err);
+      }
+    });
+  }
+  
 }

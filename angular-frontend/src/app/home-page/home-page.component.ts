@@ -12,6 +12,10 @@ import {GroupService} from "../Services/group.service";
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent {
+  searchKeyword: string = ''; // For the search input
+  errorMessage: string = '';
+  b = 0;
+
 
   formPost = new FormGroup({
     post: new FormControl(''),
@@ -23,9 +27,6 @@ export class HomePageComponent {
   allGroups:any;
    allPosts:any;
   onSubmit() {
-    /**
-     * Innocent until proven guilty
-     */
 
     this.submitted = true;
     console.warn('Your order has been submitted', this.formPost.value);
@@ -81,6 +82,25 @@ export class HomePageComponent {
       this.allFeedPosts = data;
 
     });
+  }
 
+  onSearch() {
+    if (this.searchKeyword.trim() === '') {
+      this.errorMessage = 'Please enter a search keyword';
+      return;
+    }
+    this.errorMessage = '';
+
+    this.postService.simpleSearch([this.searchKeyword]).subscribe({
+      next: (response) => {
+        console.log('Search Response:', response); // Check the structure here
+        this.allPosts = response.content || []; // Extract content from the response
+        this.b = 1;
+      },
+      error: (err) => {
+        this.errorMessage = 'Error occurred during search';
+        console.error(err);
+      }
+    });
   }
 }
