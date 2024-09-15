@@ -28,10 +28,11 @@ public class PostServiceImpl {
     private PostRepository postRepository;
     @Autowired
     public IndexingPostService searchService;
-    public Post createPost(String content, long userID) {
+    public Post createPost(String title, String content, long userID) {
 
 
         Post newPost = new Post();
+        newPost.setTitle(title);
         newPost.setContent(content);
         newPost.setCreationDate(LocalDateTime.now());
         newPost.setUser(userID);
@@ -72,6 +73,7 @@ public class PostServiceImpl {
                 postDTO.setUser(userService.findUserById(post.getUser()).getFirstname());
             }
             postDTO.setContent(post.getContent());
+            postDTO.setTitle(post.getTitle());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
             String formatDateTime = post.getCreationDate().format(formatter);

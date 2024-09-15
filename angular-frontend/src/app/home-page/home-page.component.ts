@@ -25,6 +25,7 @@ export class HomePageComponent {
 
 
   formPost = new FormGroup({
+    title: new FormControl(''),  // Add title here
     post: new FormControl(''),
     groupList: new FormControl()
   });

@@ -9,6 +9,10 @@
 </div>
 <form [formGroup]="formPost" (ngSubmit)="onSubmit()">
 <div  class="container">
+   <!-- Title Input -->
+   <label class="postTextLabel" style="color: white; text-align: center;">Post Title: </label>
+   <input type="text" formControlName="title" name="title" id="postTitle" required>
+   <br>
   <label class = "postTextLabel"  style="color: white; text-align: center;">Post Text : </label>
   <input type="text" formControlName="post"  name="post" id="postText" required>
   <br>
@@ -18,7 +22,7 @@
     <option [ngValue]="0"> Personal/My profile </option>
     <option *ngFor ="let onegroup of allGroups" [ngValue] = "onegroup.id">{{onegroup.name}}  </option>
   </select>
-  </div>
+</div>
   <br>
   <div class="buttonContainer">
     <button type="submit" id="postSubmit">Post</button>
@@ -90,6 +94,12 @@ ovo u komentaru je nesto chatgpt generisao, iskreno ne secam se ni za sta je hah
 <div *ngIf="b === 1 && allPosts.length === 0">
   <p>No posts found.</p>
 </div>
+<br>
+<h4>My Posts</h4>
+<app-posts [posts]="allPosts">
+</app-posts>
+
+<hr>
 <br>
 <h4>Feed</h4>
 <app-all-posts [posts]="allFeedPosts">

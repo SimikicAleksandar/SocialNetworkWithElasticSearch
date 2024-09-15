@@ -59,7 +59,7 @@ public class PostController {
 
         User u = this.userService.findByUsername(user.getName());
 
-        Post post = this.postService.createPost(dto.getText(),u.getId());
+        Post post = this.postService.createPost(dto.getTitle(), dto.getText(),u.getId());
         u.getPosts().add(post);
         userService.saveUser(u);
         return post;
@@ -81,7 +81,7 @@ public class PostController {
 
         User u = this.userService.findByUsername(user.getName());
         Group postGroup = this.groupService.getGroupById(dto.getGroupID());
-        Post post = this.postService.createPost(dto.getText(),u.getId());
+        Post post = this.postService.createPost(dto.getTitle(), dto.getText(),u.getId());
         postGroup.getPosts().add(post);
         groupService.saveGroup(postGroup);
         u.getPosts().add(post);

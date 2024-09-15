@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class PostDTO {
 
     private Long id;
-
+    private String title;
     @NotBlank
     private String content;
     @NotNull

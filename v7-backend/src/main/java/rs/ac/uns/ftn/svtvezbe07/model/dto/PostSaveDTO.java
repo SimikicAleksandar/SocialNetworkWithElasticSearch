@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PostSaveDTO {
-
+    private String title;
     private String text;
 }

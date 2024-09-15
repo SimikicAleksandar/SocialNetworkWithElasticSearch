@@ -37,6 +37,7 @@ export class PostService {
       });
   }
   create(user:any) {
+      console.log(user);  // Check if title is being passed
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -49,6 +50,7 @@ export class PostService {
 
     if(user.groupList == 0){
       const body = {
+        'title': user.title,  // Include title in the request body
         'text': user.post,
 
       };
@@ -68,6 +70,7 @@ export class PostService {
     }
     else{
       const body = {
+        'title': user.title,  // Include title in the request body
         'text': user.post,
         'groupID':user.groupList
       };
@@ -96,8 +99,7 @@ export class PostService {
       'id': post.id,
       'groupList': post.groupList,
       'content': post.content,
-
-
+      'title' : post.title
     };
 
     return this.apiService.post(this.config._postsave_url, JSON.stringify(body), loginHeaders)
