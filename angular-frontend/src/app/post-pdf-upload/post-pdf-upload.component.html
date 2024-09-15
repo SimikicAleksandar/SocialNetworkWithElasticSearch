@@ -1,0 +1,22 @@
+<div class="pdf-upload-container">
+    <h3>Upload PDF for Post</h3>
+    
+    <div class="form-group">
+      <label for="postSelect">Select Post:</label>
+      <select [(ngModel)]="selectedPostId" id="postSelect">
+        <option *ngFor="let post of posts" [value]="post.id">{{ post.content }}</option>
+      </select>
+    </div>
+  
+    <div class="form-group">
+      <label for="pdfFile">Select PDF file:</label>
+      <input type="file" (change)="onFileSelected($event)" id="pdfFile" />
+    </div>
+  
+    <button (click)="onUpload()" class="upload-btn">Upload PDF</button>
+    <a href="http://localhost:4200/HomePage" class="button-link">Go back to posts</a>
+
+    <p *ngIf="successMessage" class="success-msg">{{ successMessage }}</p>
+    <p *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</p>
+  </div>
+  

@@ -1,0 +1,67 @@
+.pdf-upload-container {
+  background-color: #1c1c1c;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #f0f0f0;
+}
+
+select, input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+select:focus, input[type="file"]:focus {
+  outline: none;
+  border: 1px solid #fff;
+}
+
+.upload-btn {
+  width: 100%;
+  background-color: #444;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-btn:hover {
+  background-color: #666;
+}
+
+.upload-btn:disabled {
+  background-color: #333;
+  cursor: not-allowed;
+}
+
+.success-msg {
+  color: #4caf50;
+  margin-top: 10px;
+}
+
+.error-msg {
+  color: #f44336;
+  margin-top: 10px;
+}

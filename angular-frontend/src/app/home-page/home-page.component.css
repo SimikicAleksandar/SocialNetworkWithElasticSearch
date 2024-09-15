@@ -56,3 +56,15 @@ h2, h4 {
   border-radius: 10px;
   border: 2px solid black; /* Set the border color to black */
 }
+
+.buttonContainerr {
+  background-color: black; /* Black background */
+  color: white; /* White text color */
+  padding: 5px; /* Adjust padding as needed */
+  width: 9%; /* Adjust width as needed */
+  border-radius: 5px; /* Optional: Rounded corners */
+}
+.buttonContainerr a {
+  color: white; /* White text color for the link */
+  text-decoration: none; /* Remove underline from the link */
+}

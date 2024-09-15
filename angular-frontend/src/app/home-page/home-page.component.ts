@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {PostService} from "../Services/post.service";
 import {UserServiceService} from "../user-service.service";
 import {GroupService} from "../Services/group.service";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home-page',
@@ -15,6 +16,12 @@ export class HomePageComponent {
   searchKeyword: string = ''; // For the search input
   errorMessage: string = '';
   b = 0;
+
+  searchTitle: string = '';
+  searchContent: string = '';
+  searchPdfContent: string = '';
+  searchOperator: string = 'OR'; // Default to 'OR'
+  advancedResults: any[] = [];
 
 
   formPost = new FormGroup({
@@ -40,8 +47,8 @@ export class HomePageComponent {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private postService : PostService,
-    private groupService : GroupService
-
+    private groupService : GroupService,
+    private httpClient: HttpClient // Make sure HttpClient is injected
   ) {
     if(this.authService.isAuthenticated())
     {
@@ -94,7 +101,7 @@ export class HomePageComponent {
     this.postService.simpleSearch([this.searchKeyword]).subscribe({
       next: (response) => {
         console.log('Search Response:', response); // Check the structure here
-        this.allPosts = response.content || []; // Extract content from the response
+        this.advancedResults = response.content || [];
         this.b = 1;
       },
       error: (err) => {
@@ -103,4 +110,30 @@ export class HomePageComponent {
       }
     });
   }
+
+    // Perform advanced search
+    onAdvancedSearch() {
+      const searchBody = {
+        keywords: [
+          `title:${this.searchTitle}`,
+          `content:${this.searchContent}`,
+          `pdfsranje:${this.searchPdfContent}`,
+          this.searchOperator
+        ]
+      };
+    
+      this.httpClient.post<{ content: any[] }>('http://localhost:8080/api/searchPosts/advanced', searchBody)
+        .subscribe(
+          (response) => {
+            this.advancedResults = response.content || [];
+            this.errorMessage = '';
+          },
+          (error) => {
+            this.errorMessage = 'Error performing advanced search';
+            this.advancedResults = [];
+          }
+        );
+    }
+    
+
 }

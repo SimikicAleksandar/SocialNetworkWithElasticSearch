@@ -23,37 +23,74 @@
   <div class="buttonContainer">
     <button type="submit" id="postSubmit">Post</button>
   </div>
-  <br>
 
 </form>
-<br>
-<br>
-<br>
-<br>
-<h4>Search posts</h4>
+<h2>Search posts</h2>
 <!-- Search Bar for Posts -->
 <div class="search-container">
-  <p>SIMPLE SEARCH FOR POSTS</p>
+  <h3>Simple Search for Posts</h3>
   <input type="text" [(ngModel)]="searchKeyword" placeholder="Search posts">
   <button class="btn" (click)="onSearch()">Search</button>
 </div>
-
+<br>
+<button class="buttonContainerr"><a href="http://localhost:4200/post-upload-pdf">Upload a pdf file</a></button>
+<!-- 
+ovo u komentaru je nesto chatgpt generisao, iskreno ne secam se ni za sta je hahaha -->
 <!-- Display posts only if search has been done -->
-<div *ngIf="b === 1 && allPosts.length > 0">
+<!-- <div *ngIf="b === 1 && allPosts.length > 0">
   <div *ngFor="let post of allPosts">
     <div>
       <p>Post Content (English): {{ post.contentEn }}</p>
-      <p>Creation Date: {{ post.creationDate | date:'short' }}</p> <!-- Format the date if needed -->
+      <p>Creation Date: {{ post.creationDate | date:'short' }}</p> 
       <p>Like Number: {{ post.likeNumber }}</p>
-      <p>Title: {{ post.title || 'No Title' }}</p> <!-- Fallback in case title is null -->
+      <p>Title: {{ post.title || 'No Title' }}</p>
     </div>
+  </div>
+</div> -->
+<!-------------------------------------------------------------------------->
+<div class="advanced-search-container">
+  <h3>Advanced Search for Posts</h3>
+  <form (ngSubmit)="onAdvancedSearch()">
+    <label for="searchTitle">Title:</label>
+    <input type="text" [(ngModel)]="searchTitle" name="searchTitle" id="searchTitle" />
+
+    <label for="searchContent">Content:</label>
+    <input type="text" [(ngModel)]="searchContent" name="searchContent" id="searchContent" />
+
+    <label for="searchPdfContent">PDF Content:</label>
+    <input type="text" [(ngModel)]="searchPdfContent" name="searchPdfContent" id="searchPdfContent" placeholder="Search text in PDFs" />
+
+    <label for="operator">Operator:</label>
+    <select [(ngModel)]="searchOperator" name="operator" id="operator">
+      <option value="OR">OR</option>
+      <option value="AND">AND</option>
+    </select>
+
+    <button type="submit">Search</button>
+  </form>
+
+  <div *ngIf="advancedResults.length > 0">
+    <div *ngFor="let post of advancedResults">
+      <hr>
+      <h3>Search Result</h3>
+      <p>Post Title: {{ post.title || 'No Title' }}</p>
+      <p>Post Content: {{ post.contentEn || 'No Content' }}</p>
+      <!-- Add other post details as needed -->
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage">
+    <p class="error-msg">{{ errorMessage }}</p>
   </div>
 </div>
 
+
+<!-------------------------------------------------------------------------->
 <!-- Display a message if no posts found -->
 <div *ngIf="b === 1 && allPosts.length === 0">
   <p>No posts found.</p>
 </div>
+<br>
 <h4>Feed</h4>
 <app-all-posts [posts]="allFeedPosts">
 </app-all-posts>

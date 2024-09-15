@@ -34,6 +34,7 @@ import {MyProfileComponent} from "./my-profile/my-profile.component";
 import {AllPostsComponent} from "./all-posts/all-posts.component";
 import {ReactionCommentService} from "./Services/reaction-comment.service";
 import { PdfUploadComponent } from './pdf-upload/pdf-upload.component';
+import { PostPdfUploadComponent } from './post-pdf-upload/post-pdf-upload.component';
 const routes: Routes = [
   { path: '', component: HomeComponentComponent },
   { path: 'login', component: LoginComponent},
@@ -65,7 +66,8 @@ const routes: Routes = [
     PostsComponent,
     GroupsComponent,
     OneGroupComponent,
-    PdfUploadComponent
+    PdfUploadComponent,
+    PostPdfUploadComponent
   ],
   imports: [
     BrowserModule,
